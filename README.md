@@ -1,4 +1,4 @@
-COVID-19 Wastewater Tracking Dashboard
+#COVID-19 Wastewater Tracking Dashboard
 
 This project is an interactive dashboard prototype for monitoring SARS-CoV-2 viral load in wastewater samples across U.S. cities. Wastewater epidemiology provides an early warning of COVID-19 outbreaks before clinical cases are reported.
 
