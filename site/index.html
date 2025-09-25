@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Wastewater Tracking Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(16, 24, 32, 0.9) 0%, rgba(39, 79, 114, 0.8) 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section with Animated Background -->
+    <div id="hero" class="hero-bg min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="px-6 py-4 flex justify-between items-center bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg">
+            <div class="flex items-center space-x-2">
+                <i data-feather="activity" class="text-blue-400"></i>
+                <span class="text-white font-bold text-xl">WastewaterCOVID</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-white hover:text-blue-300 transition">Dashboard</a>
+                <a href="#" class="text-white hover:text-blue-300 transition">Methodology</a>
+                <a href="#" class="text-white hover:text-blue-300 transition">Research</a>
+                <a href="#" class="text-white hover:text-blue-300 transition">About</a>
+            </div>
+            <button class="md:hidden text-white">
+                <i data-feather="menu"></i>
+            </button>
+        </nav>
+
+        <!-- Hero Content -->
+        <div class="flex-grow flex flex-col justify-center items-center text-center px-4" data-aos="fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Tracking COVID-19 Through Wastewater</h1>
+            <p class="text-xl text-blue-100 max-w-3xl mb-10">
+                Real-time monitoring and visualization of SARS-CoV-2 viral load in wastewater samples across major cities
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition flex items-center">
+                    <i data-feather="map" class="mr-2"></i> View Map
+                </button>
+                <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-6 py-3 rounded-lg font-medium transition flex items-center">
+                    <i data-feather="download" class="mr-2"></i> Download Data
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+            <i data-feather="chevron-down" class="text-white animate-bounce w-10 h-10"></i>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <section class="py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Wastewater Surveillance Dashboard</h2>
+            <p class="text-gray-600 max-w-3xl mx-auto">
+                Monitoring viral concentrations in wastewater provides early warning of COVID-19 outbreaks before clinical cases are reported
+            </p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover transition" data-aos="fade-up">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                        <i data-feather="droplet"></i>
+                    </div>
+                    <h3 class="ml-4 font-semibold text-gray-800">Samples Analyzed</h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-900 mb-2">12,847</p>
+                <p class="text-gray-500">+1,234 this week</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover transition" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-green-100 text-green-600">
+                        <i data-feather="map-pin"></i>
+                    </div>
+                    <h3 class="ml-4 font-semibold text-gray-800">Monitoring Sites</h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-900 mb-2">328</p>
+                <p class="text-gray-500">Across 42 states</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md card-hover transition" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                        <i data-feather="trending-up"></i>
+                    </div>
+                    <h3 class="ml-4 font-semibold text-gray-800">Early Detections</h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-900 mb-2">94%</p>
+                <p class="text-gray-500">Of outbreaks predicted 3-7 days early</p>
+            </div>
+        </div>
+
+        <!-- Main Chart -->
+        <div class="bg-white p-6 rounded-xl shadow-md mb-16" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-800">Viral Load Trends (Past 90 Days)</h3>
+                <div class="flex space-x-2 mt-4 md:mt-0">
+                    <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">National</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium">Regional</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium">Local</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="mainChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Comparison Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-xl shadow-md" data-aos="fade-up">
+                <h3 class="text-xl font-semibold text-gray-800 mb-6">Variant Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="variantChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-xl font-semibold text-gray-800 mb-6">Regional Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="regionalChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Visualization -->
+        <div class="bg-white p-6 rounded-xl shadow-md mb-16" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-800">Monitoring Network Map</h3>
+                <div class="flex items-center space-x-2 mt-4 md:mt-0">
+                    <span class="text-sm text-gray-500">Last updated: Today</span>
+                    <button class="p-2 bg-gray-100 rounded-lg">
+                        <i data-feather="refresh-cw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
+                <div class="text-center">
+                    <i data-feather="map" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                    <p class="text-gray-500">Interactive map visualization loading...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Methodology</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    How we collect, process, and analyze wastewater samples to detect SARS-CoV-2
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                        <i data-feather="droplet" class="text-blue-500 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Sample Collection</h3>
+                    <p class="text-gray-600">
+                        24-hour composite samples collected from wastewater treatment plants using automated samplers
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6">
+                        <i data-feather="cpu" class="text-green-500 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">RNA Extraction</h3>
+                    <p class="text-gray-600">
+                        Viral RNA concentrated and extracted using polyethylene glycol precipitation and magnetic bead methods
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mb-6">
+                        <i data-feather="bar-chart-2" class="text-purple-500 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">RT-qPCR Analysis</h3>
+                    <p class="text-gray-600">
+                        Quantitative PCR targeting N1 and N2 genes with normalization to pepper mild mottle virus
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i data-feather="activity" class="text-blue-400"></i>
+                        <span class="font-bold text-lg">WastewaterCOVID</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Tracking the pandemic through wastewater epidemiology to provide early warning of outbreaks.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Research Papers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Data API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Methodology</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Connect</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Twitter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">GitHub</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">LinkedIn</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Subscribe</h4>
+                    <p class="text-gray-400 mb-4">Get the latest updates on wastewater surveillance</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg bg-gray-800 text-white w-full focus:outline-none">
+                        <button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-r-lg">
+                            <i data-feather="send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2023 WastewaterCOVID. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Initialize Vanta.js background
+        VANTA.WAVES({
+            el: "#hero",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x1e3a8a,
+            shininess: 50.00,
+            waveHeight: 20.00,
+            waveSpeed: 0.95,
+            zoom: 0.75
+        });
+
+        // Initialize charts when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            
+            // Main Trend Chart
+            const mainCtx = document.getElementById('mainChart').getContext('2d');
+            const mainChart = new Chart(mainCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 90}, (_, i) => {
+                        const date = new Date();
+                        date.setDate(date.getDate() - (90 - i));
+                        return date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+                    }),
+                    datasets: [{
+                        label: 'Viral Load (copies/mL)',
+                        data: Array.from({length: 90}, () => Math.floor(Math.random() * 1000) + 500),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Variant Distribution Chart
+            const variantCtx = document.getElementById('variantChart').getContext('2d');
+            const variantChart = new Chart(variantCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Omicron BA.5', 'Omicron XBB', 'Delta', 'Other Variants'],
+                    datasets: [{
+                        data: [65, 25, 5, 5],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#8b5cf6',
+                            '#10b981',
+                            '#64748b'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // Regional Comparison Chart
+            const regionalCtx = document.getElementById('regionalChart').getContext('2d');
+            const regionalChart = new Chart(regionalCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Northeast', 'Midwest', 'South', 'West'],
+                    datasets: [{
+                        label: 'Current Viral Load',
+                        data: [850, 620, 780, 540],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6
+                    }, {
+                        label: '7-Day Change',
+                        data: [12, -5, 8, -3],
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
