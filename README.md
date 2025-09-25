@@ -1,10 +1,10 @@
-COVID-19 Wastewater Tracking Dashboard
+# COVID-19 Wastewater Tracking Dashboard
 
 This project is an interactive dashboard prototype for monitoring SARS-CoV-2 viral load in wastewater samples across U.S. cities. Wastewater epidemiology provides an early warning of COVID-19 outbreaks before clinical cases are reported.
 
 The dashboard demonstrates how real-time monitoring and visualization tools can support public health decision-making.
 
-Features
+## Features
 
 Hero Section with Animated Background — powered by Vanta.js
 .
@@ -32,7 +32,7 @@ Placeholder map for future integration of geospatial visualization.
 
 Methodology section explaining wastewater sampling → RNA extraction → RT-qPCR analysis.
 
-Tech Stack
+## Tech Stack
 
 Tailwind CSS
  — utility-first CSS
@@ -49,7 +49,7 @@ Chart.js
 Vanta.js
  — animated backgrounds
 
-How to Run
+## How to Run
 
 Simply clone the repo and open index.html in your browser:
 
@@ -60,7 +60,7 @@ open index.html   # or double-click in file explorer
 
 No build tools required — everything loads via CDN.
 
-Future Improvements
+## Future Improvements
 
 Integrate real wastewater data sources (e.g. CDC NWSS).
 
